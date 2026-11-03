@@ -1,0 +1,130 @@
+# computermon: handheld-RPG-style GRUB theme. Layout is in pixels for 1024x768 to line up with
+# the boxes baked into background.png (see build.py).
+
+title-text: ""
+desktop-image: "background.png"
+desktop-color: "#1A6B7A"
+terminal-font: "Press Start 2P Regular 16"
+terminal-box: "progress_*.png"
+
+# --- Feature card (left) ---------------------------------------------------
+# Two extra boot_menus that show only the selected entry: the icon strip at 3x,
+# then the name. GRUB forces menus to fit 3 entries, but when
+# item_height + item_spacing <= 0 it shows exactly one (the selected one), so
+# item_spacing is -item_height on purpose.
++ boot_menu {
+    left = 48  top = 112  width = 304  height = 96
+    item_font = "Press Start 2P Regular 16"
+    selected_item_font = "Press Start 2P Regular 16"
+    item_height = 96
+    item_padding = 0
+    item_spacing = -96
+    icon_width = 288
+    icon_height = 96
+    # GRUB doesn't clip menu text to the component, so push the title off-screen.
+    item_icon_space = 2000
+    scrollbar = false
+}
+
++ boot_menu {
+    left = 48  top = 224  width = 304  height = 24
+    item_font = "Press Start 2P Regular 16"
+    item_color = "#484860"
+    selected_item_font = "Press Start 2P Regular 16"
+    selected_item_color = "#484860"
+    item_height = 24
+    item_padding = 0
+    item_spacing = -24
+    icon_width = 0
+    icon_height = 0
+    item_icon_space = 0
+    scrollbar = false
+}
+
+# Countdown widgets share the __timeout__ id so GRUB hides them all on keypress.
++ label {
+    id = "__timeout__"
+    left = 56  top = 288  width = 48  height = 16
+    text = "EXP"
+    font = "Press Start 2P Regular 16"
+    color = "#F97535"
+}
+
+# GRUB grows the bar to fit its (hidden) text in the given font, so a small font
+# keeps it at the size below instead of spilling past the card's border.
++ progress_bar {
+    id = "__timeout__"
+    left = 112  top = 280  width = 224  height = 32
+    bar_style = "exp_*.png"
+    highlight_style = "highlight_*.png"
+    text = ""
+    font = "Press Start 2P Regular 8"
+}
+
++ label {
+    id = "__timeout__"
+    left = 56  top = 332  width = 280  height = 16
+    align = "right"
+    text = "BOOT IN %ds"
+    font = "Press Start 2P Regular 16"
+    color = "#484860"
+}
+
+# --- Key hints under the card --------------------------------------------------
++ vbox {
+    left = 48  top = 432  width = 320  height = 200
+    + label { height = 32 text = "UP/DOWN  MOVE"  font = "Press Start 2P Regular 16" color = "#FFFFFF" }
+    + label { height = 32 text = "ENTER    BOOT"  font = "Press Start 2P Regular 16" color = "#FFFFFF" }
+    + label { height = 32 text = "E        EDIT"  font = "Press Start 2P Regular 16" color = "#FFFFFF" }
+}
+
+# --- Boot entries (right) ----------------------------------------------------
++ boot_menu {
+    left = 400  top = 40  width = 608  height = 600
+
+    item_font = "Press Start 2P Regular 16"
+    item_color = "#FFFFFF"
+    selected_item_font = "Press Start 2P Regular 16"
+    selected_item_color = "#484860"
+    item_pixmap_style = "item_*.png"
+    selected_item_pixmap_style = "select_*.png"
+
+    item_height = 32
+    item_padding = 16
+    item_spacing = 44
+    icon_width = 96
+    icon_height = 32
+    item_icon_space = 16
+
+    scrollbar = true
+    scrollbar_width = 48
+    scrollbar_frame = "scrollbar_*.png"
+    scrollbar_thumb = "thumb_*.png"
+    scrollbar_slice = "center"
+    scrollbar_left_pad = 12
+}
+
+# --- Text box + button (bottom) --------------------------------------------
+# Drawn twice to fake a drop shadow. GRUB paints later components underneath,
+# so the shadow comes second; the 3px offset matches the 24px font's pixel grid.
++ label {
+    left = 48  top = 692  width = 700  height = 24
+    text = "Which OS will you boot?"
+    font = "Press Start 2P Regular 24"
+    color = "#484860"
+}
+
++ label {
+    left = 51  top = 695  width = 700  height = 24
+    text = "Which OS will you boot?"
+    font = "Press Start 2P Regular 24"
+    color = "#C8C8D0"
+}
+
++ label {
+    left = 792  top = 696  width = 216  height = 16
+    align = "center"
+    text = "C: CMD"
+    font = "Press Start 2P Regular 16"
+    color = "#FFFFFF"
+}
